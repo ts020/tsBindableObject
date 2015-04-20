@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div>
+    <input type="text" id="name" value="name" onkeyup="greeter.name=this.value" />
+</div>
+<div>
+    name-output : <span id="nameOutput"></span>
+</div>
+
+<div>
+    <input type="text" id="message" value="message" onkeyup="greeter.message=this.value" >
+</div>
+<div>
+    message-output : <span id="messageOutput"></span>
+</div>
+
+
+<div>
+    <input type="text" id="num" value="num" onkeyup="greeter.num=this.value" >
+</div>
+<div>
+    num-output : <span id="numOutput"></span>
+</div>
+<div>
+    <h2>changedLog</h2>
+    <textarea id="changedLog" style="height: 4em"></textarea>
+</div>
+<script src="example.js"></script>
+<script>
+    var greeter = new app.Greeter();
+    greeter.on("name",function(){
+        document.getElementById("nameOutput").innerHTML = greeter.name
+    });
+    greeter.on("message",function(){
+        document.getElementById("messageOutput").innerHTML = greeter.message
+    });
+    greeter.on("num",function(){
+        document.getElementById("numOutput").innerHTML = greeter.num
+    });
+    greeter.on("changed",function(){
+        document.getElementById("changedLog").value = "name : " + greeter.name + "\nmessage : " + greeter.message + "\nsnum : " + greeter.num
+    });
+</script>
+</body>
+</html>
