@@ -65,7 +65,6 @@ module olib {
         }
 
         lazyTrigger(type:string, data:any = null, queID:string = null):void {
-            var now = Date.now();
             async(()=> {
                 this.trigger(type, data)
             }, queID);
