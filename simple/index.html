@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <div><input type="text" value="name"  onkeyup="greeter.name=this.value" /></div>
+    <div>name-output : <span text="{{name}}"></span></div>
+    <div>name-output-2 : <span text="{{name}}"></span></div>
+    <div><input type="text" value="message" onkeyup="greeter.message=this.value" /></div>
+    <div>message-output : <span text="いろいろ{{message}}あるんですよ"></span></div>
+    <div>message-output-2 : <span text="{{message}}"></span></div>
+    <div>name-output-3 : <span text="{{name}}"></span></div>
+    <div>top<input type="text" value="10"  onkeyup="greeter.top=this.value" /></div>
+    <div>left<input type="text" value="10"  onkeyup="greeter.left=this.value" /></div>
+    <div>num-output : <span style="position: relative" $top="{{top}}px" $left="{{left}}px">■</span></div>
+
+<script src="example.js"></script>
+<script>
+    var greeter = new Greeter();
+
+   bindInit(greeter, document.body);
+</script>
+</body>
+</html>
