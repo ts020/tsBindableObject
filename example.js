@@ -81,7 +81,6 @@ var olib;
             var _this = this;
             if (data === void 0) { data = null; }
             if (queID === void 0) { queID = null; }
-            var now = Date.now();
             olib.async(function () {
                 _this.trigger(type, data);
             }, queID);
@@ -90,6 +89,9 @@ var olib;
     })();
     olib.Observer = Observer;
 })(olib || (olib = {}));
+/**
+ * Created by uu071639 on 2014/12/03.
+ */
 var olib;
 (function (olib) {
     var Identifier = (function () {
@@ -184,10 +186,51 @@ var app;
         function Greeter() {
             _super.call(this);
         }
+        Greeter.prototype.beforeTest = function () {
+            console.log("beforeTest");
+        };
+        Greeter.prototype.afterTest = function () {
+            console.log("afterTest");
+        };
         __decorate([bind], Greeter.prototype, "name");
         __decorate([bind], Greeter.prototype, "message");
         __decorate([bind], Greeter.prototype, "num");
+        __decorate([before("this.beforeTest"), after("this.afterTest")], Greeter.prototype, "test");
         return Greeter;
     })(olib.BindableObject);
     app.Greeter = Greeter;
 })(app || (app = {}));
+function before(handler) {
+    return function (target, name) {
+        console.log("before", arguments);
+        target.___prop___ = target.___prop___ || {};
+        Object.defineProperty(target, name, {
+            get: function () {
+                return this.___prop___[name];
+            },
+            set: function (value) {
+                eval(handler)();
+                this.___prop___[name] = value;
+            },
+            enumerable: true,
+            configurable: true
+        });
+    };
+}
+function after(handler) {
+    return function (target, name) {
+        console.log("after", arguments);
+        target.___prop___ = target.___prop___ || {};
+        Object.defineProperty(target, name, {
+            get: function () {
+                return this.___prop___[name];
+            },
+            set: function (value) {
+                this.___prop___[name] = value;
+                eval(handler)();
+            },
+            enumerable: true,
+            configurable: true
+        });
+    };
+}

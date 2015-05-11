@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+    function funcBodyToURL(func){
+        var entire = func.toString();
+        var funcBody = entire.substring(entire.indexOf("{") + 1, entire.lastIndexOf("}"));
+        return (window.URL || window.webkitURL).createObjectURL(new Blob([funcBody], { type: 'text/javascript' }));
+    }
+
+    function caller() {
+        var count = 0;
+        self.onmessage = function() {
+            count++;
+            var result = 0;
+            for(var i = 0; i < count*100000; i++ ) {
+                result += i;
+            }
+            self.postMessage(count + ': ' + result);
+        };
+    }
+
+    var worker = new Worker(funcBodyToURL(caller));
+
+    worker.onmessage = function(e) {console.log(e.data);};
+    //    setInterval(function() {
+    //        worker.postMessage('hello');
+    //    }, 20);
+    //
+
+
+    //    var count2 = 0;
+    //    function caller2() {
+    //        count2++;
+    //        var result = 0;
+    //        for(var i = 0; i < count2*100000; i++ ) {
+    //            result += i;
+    //        }
+    //        console.log(count2 + ": " + result);
+    //    }
+    //    setInterval(function() {
+    //        caller2();
+    //    }, 20);
+</script>
+</body>
+</html>
